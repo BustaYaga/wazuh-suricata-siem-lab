@@ -1,0 +1,9 @@
+<!-- Add inside <ossec_config> in /var/ossec/etc/ossec.conf on the manager.
+     Blocks the source IP of an SSH brute-force attempt for 3 minutes on the agent that saw it.
+     The firewall-drop command is defined in the default manager config. -->
+<active-response>
+  <command>firewall-drop</command>
+  <location>local</location>
+  <rules_id>5763</rules_id>
+  <timeout>180</timeout>
+</active-response>

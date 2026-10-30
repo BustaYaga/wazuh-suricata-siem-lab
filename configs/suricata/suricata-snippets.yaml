@@ -1,0 +1,21 @@
+# Only the parts of /etc/suricata/suricata.yaml that change for this lab.
+
+vars:
+  address-groups:
+    HOME_NET: "[192.168.56.0/24]"
+    EXTERNAL_NET: "!$HOME_NET"
+
+af-packet:
+  - interface: enp0s8        # lab network card; check with `ip a`
+    cluster-id: 99
+    cluster-type: cluster_flow
+    defrag: yes
+
+default-rule-path: /var/lib/suricata/rules
+rule-files:
+  - suricata.rules           # Emerging Threats Open, from suricata-update
+  - /etc/suricata/rules/local.rules
+
+# IPS mode (step 9): run with `-q 0` and NFQUEUE firewall rules
+nfq:
+  mode: accept

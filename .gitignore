@@ -1,0 +1,5 @@
+*.log
+*.pcap
+.env
+*.ova
+*.vmdk

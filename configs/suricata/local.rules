@@ -1,0 +1,11 @@
+# Lab rules for victim-linux. SIDs 1000000+ are for local rules.
+
+# --- IDS mode: alert only ---
+alert icmp any any -> $HOME_NET any (msg:"LAB ICMP ping to protected host"; itype:8; sid:1000001; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"LAB Possible port scan (many SYNs from one host)"; flags:S; threshold:type threshold, track by_src, count 30, seconds 10; sid:1000002; rev:1;)
+alert http any any -> $HOME_NET any (msg:"LAB SQL injection attempt in URI"; flow:established,to_server; http.uri; content:"union"; nocase; content:"select"; nocase; distance:0; classtype:web-application-attack; sid:1000003; rev:1;)
+alert http any any -> $HOME_NET any (msg:"LAB Path traversal attempt in URI"; flow:established,to_server; http.uri; content:"../"; classtype:web-application-attack; sid:1000004; rev:1;)
+
+# --- IPS mode (step 9): uncomment to drop instead of alert ---
+# drop http any any -> $HOME_NET any (msg:"LAB IPS dropped SQL injection"; flow:established,to_server; http.uri; content:"union"; nocase; content:"select"; nocase; distance:0; sid:1000010; rev:1;)
+# drop http any any -> $HOME_NET any (msg:"LAB IPS dropped path traversal"; flow:established,to_server; http.uri; content:"../"; sid:1000011; rev:1;)

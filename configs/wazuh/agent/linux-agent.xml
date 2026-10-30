@@ -1,0 +1,20 @@
+<!-- Add inside <ossec_config> in /var/ossec/etc/ossec.conf on victim-linux. -->
+
+<!-- Suricata alerts -->
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/suricata/eve.json</location>
+</localfile>
+
+<!-- Web server logs -->
+<localfile>
+  <log_format>apache</log_format>
+  <location>/var/log/nginx/access.log</location>
+</localfile>
+
+<!-- File integrity monitoring: alert straight away on these folders -->
+<syscheck>
+  <directories realtime="yes" check_all="yes" report_changes="yes">/var/www/html</directories>
+  <directories realtime="yes" check_all="yes">/etc/passwd,/etc/shadow,/etc/sudoers</directories>
+  <directories realtime="yes" check_all="yes">/tmp/lab-downloads</directories>
+</syscheck>
